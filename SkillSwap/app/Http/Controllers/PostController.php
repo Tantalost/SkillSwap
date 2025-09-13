@@ -13,11 +13,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $categories = Catergories::get();
-        $posts = Post::orderBy('created_at', 'DESC')->get();
+        $posts = Post::orderBy('created_at', 'DESC')->simplePaginate(8);
 
-        return view('dashboard', [
-            'categories' => $categories,
+        return view('post.index', [
             'posts' => $posts,
         ]);
     }
@@ -27,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
