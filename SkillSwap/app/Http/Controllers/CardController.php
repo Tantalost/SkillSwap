@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Card;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -38,7 +39,16 @@ class CardController extends Controller
      */
     public function show(Card $card)
     {
-        return view('cards.show', compact('card'));
+        $userCards = [];
+
+        if (Auth::check()) {
+            $userCards = Auth::user()->cards()->with('card')->get();
+        }
+
+        return view('cards.show', [
+            'card' => $card,
+            'userCards' => $userCards,
+        ]);
     }
 
     /**

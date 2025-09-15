@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('trade_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('requester_id')->constrained('users')->onDelete('cascade'); // Sender
-            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade'); //  Receiver
+            $table->foreignId('requester_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade'); 
             $table->foreignId('offered_card_id')->constrained('user_cards')->onDelete('cascade');
             $table->foreignId('requested_card_id')->constrained('user_cards')->onDelete('cascade');
             $table->string('status')->default('pending'); // Status

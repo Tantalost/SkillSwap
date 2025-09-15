@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TradeRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserCard;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,22 @@ class TradeRequestController extends Controller
      */
     public function index()
     {
-        $incoming = TradeRequest::where('receiver_id', Auth::id())->get();
-        $outgoing = TradeRequest::where('requester_id', Auth::id())->get();
+        $user = Auth::user();
 
-        return view('trades.index', compact('incoming', 'outgoing'));
+        // Trades the user has received
+        $receivedTrades = $user->tradeRequestsReceived()
+            ->with(['offeredCard.card', 'requestedCard.card', 'requester'])
+            ->get();
+
+        // Trades the user has sent
+        $sentTrades = $user->tradeRequestsSent()
+            ->with(['offeredCard.card', 'requestedCard.card', 'receiver'])
+            ->get();
+
+        return view('trades.trade-request', [
+            'receivedTrades' => $receivedTrades,
+            'sentTrades' => $sentTrades,
+        ]);
     }
 
     /**
@@ -25,7 +38,7 @@ class TradeRequestController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -33,11 +46,18 @@ class TradeRequestController extends Controller
      */
     public function store(Request $request)
     {
+        $offeredCard = UserCard::find($request->offered_card_id);
+        $requestedCard = UserCard::find($request->requested_card_id);
+
+        if ($offeredCard->user_id !== Auth::id()) {
+            return back()->with('error', 'You can only offer your own cards.');
+        }
+
         TradeRequest::create([
             'requester_id' => Auth::id(),
-            'receiver_id' => $request->receiver_id,
-            'offered_card_id' => $request->offered_card_id,
-            'requested_card_id' => $request->requested_card_id,
+            'receiver_id' => $requestedCard->user_id,
+            'offered_card_id' => $offeredCard->id,
+            'requested_card_id' => $requestedCard->id,
             'status' => 'pending',
         ]);
 
@@ -65,8 +85,11 @@ class TradeRequestController extends Controller
      */
     public function update(Request $request, TradeRequest $tradeRequest)
     {
+        if ($tradeRequest->receiver_id !== Auth::id()) {
+            return back()->with('error', 'Unauthorized action.');
+        }
+
         if ($request->action === 'accept') {
-            // Card Swap
             $offeredCard = UserCard::find($tradeRequest->offered_card_id);
             $requestedCard = UserCard::find($tradeRequest->requested_card_id);
 

@@ -16,11 +16,35 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-             'id' => 1,
-             'name' => 'Test User',
-             'email' => 'test@example.com',
+            'id' => 1,
+            'name' => 'Ash Ketchum',
+            'email' => 'ash@example.com',
         ]);
-        
+
+        User::factory()->create([
+            'id' => 2,
+            'name' => 'Misty Waterflower',
+            'email' => 'misty@example.com',
+        ]);
+
+        User::factory()->create([
+            'id' => 3,
+            'name' => 'Brock Harrison',
+            'email' => 'brock@example.com',
+        ]);
+
+        User::factory()->create([
+            'id' => 4,
+            'name' => 'Gary Oak',
+            'email' => 'gary@example.com',
+        ]);
+
+        User::factory()->create([
+            'id' => 5,
+            'name' => 'Tracey Sketchit',
+            'email' => 'tracey@example.com',
+        ]);
+
         $catergories = [
             'Fire',
             'Water',
@@ -38,10 +62,11 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        Post::factory(10)->create();
+        Post::factory(15)->create();
 
         $this->call([
             CardSeeder::class,
+            UserCardSeeder::class,
         ]);
     }
 }
