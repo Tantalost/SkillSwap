@@ -11,11 +11,17 @@
                 </div>
             </div>
 
-            <div class="flex items-center">
+            <div class="flex items-center space-x-4">
                 @auth
                     <a href="{{ route('trade-requests.index') }}" class="flex items-center">
                         <x-primary-button class="bg-emerald-800">
                             Check Trade Requests!
+                        </x-primary-button>
+                    </a>
+
+                    <a href="{{ route('user.cards') }}" class="flex items-center">
+                        <x-primary-button class="bg-blue-600">
+                            My Cards
                         </x-primary-button>
                     </a>
                 @endauth

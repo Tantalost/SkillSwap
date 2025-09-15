@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserCard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserCardController extends Controller
 {
@@ -12,7 +13,10 @@ class UserCardController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $userCards = $user->cards()->with('card')->get();
+
+        return view('cards.my-cards', compact('userCards'));
     }
 
     /**

@@ -21,13 +21,13 @@ Route::middleware(['auth', 'verified'])->group(function (){
         ->name('posts.store');
 
     Route::resource('my-cards', UserCardController::class)
-    ->except(['show']);
+        ->except(['show']);
 
     Route::resource('trade-requests', TradeRequestController::class)
-    ->only(['index', 'store', 'update', 'destroy']);
+        ->only(['index', 'store', 'update', 'destroy']);
 
     Route::resource('trade-requests', TradeRequestController::class)
-    ->only(['index', 'store', 'update', 'destroy']);
+        ->only(['index', 'store', 'update', 'destroy']);
 
     Route::get('/trade-requests', [App\Http\Controllers\TradeRequestController::class, 'index'])
         ->name('trade-requests.index');
@@ -40,6 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     Route::delete('/trade-requests/{tradeRequest}', [App\Http\Controllers\TradeRequestController::class, 'destroy'])
         ->name('trade-requests.destroy');
+        
+    Route::get('/my-cards', [\App\Http\Controllers\UserCardController::class, 'index'])
+        ->name('user.cards');
 
 });
 
