@@ -2,25 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Catergories;
-use App\Models\Post;
+use App\Models\UserCard;
 use Illuminate\Http\Request;
-use App\Models\Card;
 
-class PostController extends Controller
+class UserCardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'DESC')->simplePaginate(8);
-        $cards = Card::all();
-
-        return view('post.index', [
-            'posts' => $posts,
-            'cards' => $cards,
-        ]);
+        //
     }
 
     /**
@@ -28,7 +20,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        //
     }
 
     /**
@@ -36,15 +28,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validata([
-            'title' => 'requred',
-        ]);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(UserCard $userCard)
     {
         //
     }
@@ -52,7 +42,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(UserCard $userCard)
     {
         //
     }
@@ -60,7 +50,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, UserCard $userCard)
     {
         //
     }
@@ -68,7 +58,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(UserCard $userCard)
     {
         //
     }

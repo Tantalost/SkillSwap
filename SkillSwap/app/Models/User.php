@@ -46,4 +46,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function cards()
+    {
+        return $this->hasMany(UserCard::class);
+    }
+
+    public function tradeRequests()
+    {
+        return $this->hasMany(TradeRequest::class, 'requester_id');
+    }
 }

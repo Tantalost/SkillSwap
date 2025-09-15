@@ -14,9 +14,9 @@
             </div>
 
             <div class="flex">
-                <a href="/test" class="flex items-center">
+                <a href="{{route('posts.create')}}" class="flex items-center">
                     <x-primary-button class="bg-emerald-800">
-                        Request Card!
+                        Request a Trade!
                     </x-primary-button>
                 </a>
 
